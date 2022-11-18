@@ -1,0 +1,17 @@
+Task 1:
+
+(letter, frequency): (a, 23), (b, 20), (c, 19), (d, 15), (e, 13), (f, 10)
+Huffman encoding tree:
+                                100
+                                /\
+                               /  \
+                            a,23   47
+                                    /\
+                                   /  \
+                                 b,20  29
+                                       /\
+                                      /  \
+                                    c,19  23
+                                          /\
+                                         /  \
+                                      f,10  e,13
