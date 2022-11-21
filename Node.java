@@ -1,11 +1,11 @@
 public class Node {
     
-    int data;
+    double data;
     String s;
     Node left;
     Node right;
 
-    public Node(String letter, int freq) {
+    public Node(String letter, double freq) {
         s = letter;
         data = freq;
     }

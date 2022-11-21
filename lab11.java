@@ -26,35 +26,48 @@ public class lab11 {
             size++;
         }
 
-        PriorityQueue<Node> priorQueueue = new PriorityQueue<Node>(size, new Comparato());
+        // Creates the structure that we will be keeping the nodes in
+        PriorityQueue<Node> priorQ = new PriorityQueue<Node>(size, new Comparato());
 
         // Creating a node for each letter
         while((generic = br2.readLine()) != null) {
-            String letter = generic.substring(0, 1);
-            String frequency = generic.substring(2);
-            int freq = Integer.parseInt(frequency);
-            priorQueueue.add(new Node(letter, freq));       
+            String letter = generic.substring(0, 1); // The letter from that line
+            String frequency = generic.substring(2); // The frequency from that line
+            double freq = Double.parseDouble(frequency); // The frequency converted to a double
+            priorQ.add(new Node(letter, freq)); // Adding that node to the queue
         }
-
+        // Creating root node
         Node root = null;
 
-        while (priorQueueue.size() > 1) {
-            Node x = priorQueueue.peek();
-            priorQueueue.poll();
+        /* Extract the two minium values from
+         * the heap each time until it has it's
+         * size reduced to 1, extract until all
+         * nodes are extracted
+         */
+        while (priorQ.size() > 1) {
+            // first value to be extracted
+            Node x = priorQ.peek();
+            priorQ.poll();
+            
+            // Second value to be extracted
+            Node y = priorQ.peek();
+            priorQ.poll();
 
-            Node y = priorQueueue.peek();
-            priorQueueue.poll();
-
+            // Creating a new node that is the sum of the frequency
+            // of the two nodes that were just extracted
             Node f = new Node("-", x.data + y.data);
-            f.left = x;
-            f.right = y;
-            root = f;
-            priorQueueue.add(f);
+            f.left = x; // First extracted node is left child
+            f.right = y; // Second extracted node is right child
+            root = f; // Making node f the root node
+            priorQ.add(f); // Adding node f to the priority queue
         }
+
+        printCode(root, "");
     }
 
+    // Method for printing the huffman encoding
     public static void printCode(Node root, String stringe) {
-        if(root.left == null && root.right == null && Character.isLetter(root.s)) {
+        if(root.left == null && root.right == null && Character.isLetter(root.s.charAt(0))) {
             System.out.println(root.s + ":" + stringe);
         }
 
