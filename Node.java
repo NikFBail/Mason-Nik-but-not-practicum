@@ -8,5 +8,7 @@ public class Node {
     public Node(String letter, double freq) {
         s = letter;
         data = freq;
+        this.right = null;
+        this.left = null;
     }
 }
