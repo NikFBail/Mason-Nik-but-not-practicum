@@ -19,10 +19,10 @@ public class lab11 {
         // Putting in a scanner to read a file name
         Scanner scant = new Scanner(System.in);
         // Getting the input file
-        System.out.println("nom de fichier d'input: ");
+        System.out.println("nom de fichier d'entrée: ");
         inputFileName = scant.nextLine();
         // Creating an output file
-        System.out.println("nom de fichier d'output: ");
+        System.out.println("nom de fichier de sortie: ");
         outputFileName = scant.nextLine();
 
         File results = new File(outputFileName);
@@ -46,8 +46,6 @@ public class lab11 {
             String frequency = generic.substring(2); // The frequency from that line
             double freq = Double.parseDouble(frequency); // The frequency converted to a double
             Node temp = new Node(letter, freq);
-            temp.left = null;
-            temp.right = null;
             priorQ.add(temp); // Adding that node to the queue
         }
         // Creating root node
@@ -82,17 +80,19 @@ public class lab11 {
     // Method for printing the huffman encoding
     public static void printCode(Node root, String stringe, File file) {
         if(root.left == null && root.right == null && Character.isLetter(root.s.charAt(0))) {
-            // try {
-            // // A writer for the output file
-            // BufferedWriter out = new BufferedWriter(new FileWriter(file, true));
-            // out.write(root.s + ":" + stringe + "\n");
-            // } catch (IO Exception e) {
-            //     System.out.println("Exception Occured: " + e);
-            // }
+             try {
+            // A writer for the output file
+             BufferedWriter out = new BufferedWriter(new FileWriter(file, true));
+             out.write(root.s + ":" + stringe + "\n");
+             out.close();
+             } catch (IOException e) {
+                 System.out.println("Exception Occured: " + e);
+            }
             System.out.println(root.s + ":" + stringe);
         }
 
-        printCode(root.left, stringe + "0", file);
-        printCode(root.right, stringe + "1", file);
+        if (root.left != null){printCode(root.left, stringe + "0", file);}
+        if (root.right != null){printCode(root.right, stringe + "1", file);}
+        
     }
 }
