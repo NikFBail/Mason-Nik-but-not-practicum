@@ -11,4 +11,8 @@ public class Node {
         this.right = null;
         this.left = null;
     }
+
+    public String toString(){
+        return this.s;
+    }
 }

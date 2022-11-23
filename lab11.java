@@ -48,6 +48,8 @@ public class lab11 {
             Node temp = new Node(letter, freq);
             priorQ.add(temp); // Adding that node to the queue
         }
+
+        //System.out.println(priorQ.toString());
         // Creating root node
         Node root = null;
 
@@ -59,7 +61,12 @@ public class lab11 {
         while (priorQ.size() > 1) {
             // first value to be extracted
             Node x = priorQ.peek();
+            System.out.println(priorQ);
             priorQ.poll();
+            System.out.println(priorQ);
+            
+
+
             
             // Second value to be extracted
             Node y = priorQ.peek();
