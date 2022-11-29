@@ -65,9 +65,6 @@ public class lab11 {
             priorQ.poll();
             System.out.println(priorQ);
             
-
-
-            
             // Second value to be extracted
             Node y = priorQ.peek();
             priorQ.poll();
@@ -81,25 +78,28 @@ public class lab11 {
             priorQ.add(f); // Adding node f to the priority queue
         }
 
-        printCode(root, "", results);
-    }
+        Node.printCode(root, "", results);
 
-    // Method for printing the huffman encoding
-    public static void printCode(Node root, String stringe, File file) {
-        if(root.left == null && root.right == null && Character.isLetter(root.s.charAt(0))) {
-             try {
-            // A writer for the output file
-             BufferedWriter out = new BufferedWriter(new FileWriter(file, true));
-             out.write(root.s + ":" + stringe + "\n");
-             out.close();
-             } catch (IOException e) {
-                 System.out.println("Exception Occured: " + e);
-            }
-            System.out.println(root.s + ":" + stringe);
-        }
-
-        if (root.left != null){printCode(root.left, stringe + "0", file);}
-        if (root.right != null){printCode(root.right, stringe + "1", file);}
-        
+        System.out.println("Encrypt or Decrypt? (e/d)");
+            scant.nextLine();
+            char answer = scant.next().charAt(0);
+            if(answer == 'd'){
+                System.out.println("Now enter the encrypted text:");
+                System.out.println("Decrypted text:");
+                String encryptedText = "";
+                while(scant.hasNext()){
+                    encryptedText += scant.next();
+                }
+                System.out.println(potato.decrypt(encryptedText));
+            } else if (answer == 'e') {
+                System.out.println("Now enter some plaintext:");
+                String plainText = "";
+                while(scant.hasNext()){
+                    plainText += scant.next();
+                }
+                String cleanText = plainText.replaceAll("\\W|[0-9]|_", "");
+                System.out.println(potato.encrypt(cleanText.toLowerCase()));
+            } else System.out.println("That's not what I asked for");
+            scant.close();
     }
 }
