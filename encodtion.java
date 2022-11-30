@@ -5,11 +5,11 @@ public class encodtion {
         String result = "";
         for (int i = 0; i < text.length; i++) {
             if(text[i] == '1') {
-                currNode = currNode.rightChild;
+                currNode = currNode.right;
             } else {
-                currNode = currNode.leftChild;
+                currNode = currNode.left;
             }
-            if(currNode.letter != (char)0) {
+            if(currNode.letter != "0") {
                 result += currNode.letter; 
                 if(result.length()%70 == 69) result += "\n";
                 currNode = root;
@@ -34,10 +34,10 @@ public class encodtion {
         return result;
     }
 
-    private String encryptHelper(char currentChar, Node node){
+    private String encryptHelper(String currentChar, Node node){
         if(node != null) {
-        if(node.letter == currentChar) return node.binary;
-        return encryptHelper(currentChar, node.leftChild) + encryptHelper(currentChar, node.rightChild);
+            if(node.letter == currentChar) return node.binary;
+            return encryptHelper(currentChar, node.left) + encryptHelper(currentChar, node.right);
         } else return "";
     }
 }

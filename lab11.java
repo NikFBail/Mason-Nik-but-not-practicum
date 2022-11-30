@@ -5,16 +5,23 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class lab11 {
+
+    public Node root;
+    public ArrayList<Node> nodeArray = new ArrayList<Node>();
+
     public static void main(String args[]) throws NumberFormatException, IOException {
         // Initializing variables
         String inputFileName;
         String outputFileName;
         int size = 0;
         String generic;
+        String answer;
+        Boolean freqOrBin = true;
 
         // Putting in a scanner to read a file name
         Scanner scant = new Scanner(System.in);
@@ -24,6 +31,23 @@ public class lab11 {
         // Creating an output file
         System.out.println("nom de fichier de sortie: ");
         outputFileName = scant.nextLine();
+        // Determining if the file is in binary or has the letter frequencies
+        System.out.println("Est le fichier en binaire ou c'est que il contient les frequences des lettres?");
+        System.out.println("b pour binaire ou f pour frequences des lettres:");
+        answer = scant.nextLine();
+        if(answer == "b") freqOrBin = true;
+        if(answer == "f") freqOrBin = false;
+
+        // Reads input file and creates node array
+        try {
+            File inputFile = new File(inputFileName);
+            Scanner fileScan = new Scanner(inputFile);
+            if(freqOrBin) {
+                while(fileScan.hasNextLine()) {
+                    this.nodeArray.add(new Node(fileScan.next().substring(0, 1), fileScan.next()));
+                }
+            }
+        }
 
         File results = new File(outputFileName);
 
