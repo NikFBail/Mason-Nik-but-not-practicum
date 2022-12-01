@@ -10,6 +10,10 @@ public class Node {
     public Node right;
     public Node parent;
 
+    public Node() {
+        frequency = 100;
+    }
+
     public Node(String let, double freq) {
         this.letter = let;
         this.frequency = freq;
@@ -46,6 +50,13 @@ public class Node {
     }
 }
 // Comparison Methods
+
+/* I want to try to change these so
+ * that they will return the difference of x - y
+ * I think that will result in the same thing, but
+ * will reduce the lines of code to write
+ * Will change after I get everything working
+ */
 class ComparatoFreq implements Comparator<Node> {
     public int compare(Node x, Node y) {
         if(y.frequency > x.frequency) return -1;

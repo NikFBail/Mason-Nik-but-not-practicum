@@ -9,10 +9,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
-public class lab11 {
-
-    public Node root;
-    public ArrayList<Node> nodeArray = new ArrayList<Node>();
+public class Main {
 
     public static void main(String args[]) throws NumberFormatException, IOException {
         // Initializing variables
@@ -20,7 +17,6 @@ public class lab11 {
         String outputFileName;
         int size = 0;
         String generic;
-        String answer;
         Boolean freqOrBin = true;
 
         // Putting in a scanner to read a file name
@@ -34,20 +30,9 @@ public class lab11 {
         // Determining if the file is in binary or has the letter frequencies
         System.out.println("Est le fichier en binaire ou c'est que il contient les frequences des lettres?");
         System.out.println("b pour binaire ou f pour frequences des lettres:");
-        answer = scant.nextLine();
+        String answer = scant.nextLine();
         if(answer == "b") freqOrBin = true;
         if(answer == "f") freqOrBin = false;
-
-        // Reads input file and creates node array
-        try {
-            File inputFile = new File(inputFileName);
-            Scanner fileScan = new Scanner(inputFile);
-            if(freqOrBin) {
-                while(fileScan.hasNextLine()) {
-                    this.nodeArray.add(new Node(fileScan.next().substring(0, 1), fileScan.next()));
-                }
-            }
-        }
 
         File results = new File(outputFileName);
 
@@ -95,7 +80,7 @@ public class lab11 {
 
             // Creating a new node that is the sum of the frequency
             // of the two nodes that were just extracted
-            Node f = new Node("-", x.data + y.data);
+            Node f = new Node("-", x.frequency + y.frequency);
             f.left = x; // First extracted node is left child
             f.right = y; // Second extracted node is right child
             root = f; // Making node f the root node
@@ -106,8 +91,8 @@ public class lab11 {
 
         System.out.println("Encrypt or Decrypt? (e/d)");
             scant.nextLine();
-            char answer = scant.next().charAt(0);
-            if(answer == 'd'){
+            String result = scant.next();
+            if(result == "d"){
                 System.out.println("Now enter the encrypted text:");
                 System.out.println("Decrypted text:");
                 String encryptedText = "";
@@ -115,7 +100,7 @@ public class lab11 {
                     encryptedText += scant.next();
                 }
                 System.out.println(potato.decrypt(encryptedText));
-            } else if (answer == 'e') {
+            } else if (result == "e") {
                 System.out.println("Now enter some plaintext:");
                 String plainText = "";
                 while(scant.hasNext()){
