@@ -1,4 +1,6 @@
 public class encodtion {
+    public Node root;
+
     public String decrypt(String cryptText){
         char[] text = cryptText.toCharArray();
         Node currNode = this.root;
@@ -18,10 +20,13 @@ public class encodtion {
         return result;
     }
 
-    public String encrypt(String plainText){
+    public String encrypt(String plaintext){
         String result = "";
         int counter = 0;
-        char[] text = plainText.toCharArray();
+        String[] text = new String[plaintext.length()];
+        for(int i = 0; i < plaintext.length(); i++) {
+            text[i] = plaintext.substring(i, i + 1);
+        }
         for (int i = 0; i < text.length; i++) {
             String encryptedChar = encryptHelper(text[i], root);
             result += encryptedChar;

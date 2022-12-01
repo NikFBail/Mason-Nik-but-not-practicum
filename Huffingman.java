@@ -1,9 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Scanner;
-import java.util.concurrent.PriorityBlockingQueue;
 
 public class Huffingman {
     public Node root;
@@ -27,7 +28,7 @@ public class Huffingman {
                 createBinaryTree();
             }
             fileScan.close();
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {   
             System.out.println("An error occurred.");
         }
     }
@@ -76,5 +77,74 @@ public class Huffingman {
         if(node.right != null) node.right.binary = node.binary + "1";
         HuffingAlg(node.left);
         HuffingAlg(node.right);
+    }
+
+    public void outputList(String outFile) {
+        try {
+            FileWriter writer = new FileWriter(outFile);
+            PriorityQueue<Node> nodeQueue = new PriorityQueue<>(new ComparatoBinary());
+            Node node;
+            nodeQueue.addAll(nodeArray);
+            for(int i = nodeQueue.size(); i > 0; i--) {
+                node = nodeQueue.poll();
+                writer.write(node.letter + " " + node.binary + "\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("IOException in the outputList method.");
+        }
+    }
+
+    public String AvgLength() {
+        double total = 0;
+        for(Node node : nodeArray) {
+            total += (node.frequency/100) * node.binary.length();
+        }
+        return total + "";
+    }
+
+    public String decrypt(String cryptText){
+        char[] text = cryptText.toCharArray();
+        Node currNode = this.root;
+        String result = "";
+        for (int i = 0; i < text.length; i++) {
+            if(text[i] == '1') {
+                currNode = currNode.right;
+            } else {
+                currNode = currNode.left;
+            }
+            if(currNode.letter != "0") {
+                result += currNode.letter; 
+                if(result.length()%70 == 69) result += "\n";
+                currNode = root;
+            }
+        }
+        return result;
+    }
+
+    public String encrypt(String plaintext){
+        String result = "";
+        int counter = 0;
+        String[] text = new String[plaintext.length()];
+        for(int i = 0; i < plaintext.length(); i++) {
+            text[i] = plaintext.substring(i, i + 1);
+        }
+        for (int i = 0; i < text.length; i++) {
+            String encryptedChar = encryptHelper(text[i], root);
+            result += encryptedChar;
+            counter += encryptedChar.length();
+            if(counter > 70){
+                counter = 0;
+                result += "\n";
+            }
+        }
+        return result;
+    }
+
+    private String encryptHelper(String currentChar, Node node){
+        if(node != null) {
+            if(node.letter == currentChar) return node.binary;
+            return encryptHelper(currentChar, node.left) + encryptHelper(currentChar, node.right);
+        } else return "";
     }
 }

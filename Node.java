@@ -14,20 +14,18 @@ public class Node {
         frequency = 100;
     }
 
-    public Node(String let, double freq) {
-        this.letter = let;
-        this.frequency = freq;
-        this.right = null;
-        this.left = null;
-    }
-
     public Node(String let, String bin) {
         this.binary = bin;
         this.letter = let;
     }
 
+    public Node(String let, double freq) {
+        this.letter = let;
+        this.frequency = freq;
+    }    
+
     public Node(Node lift, Node write){ //purposefully gave bad names so we can distinguish between variables
-        this.frequency = left.frequency + right.frequency;
+        this.frequency = lift.frequency + write.frequency;
         this.left = lift;
         this.right = write;
         left.parent = this;
