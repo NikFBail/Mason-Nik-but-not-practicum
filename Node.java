@@ -57,15 +57,11 @@ public class Node {
  */
 class ComparatoFreq implements Comparator<Node> {
     public int compare(Node x, Node y) {
-        if(y.frequency > x.frequency) return -1;
-        if(y.frequency < x.frequency) return 1;
-        else return 0;
+        return (int) (x.frequency - y.frequency);
     }
 }
 class ComparatoBinary implements Comparator<Node> {
     public int compare(Node x, Node y) {
-        if(y.binary.length() > x.binary.length()) return -1;
-        if(y.binary.length() < x.binary.length()) return 1;
-        else return 0;
+        return (int) (x.frequency - y.frequency);
     }
 }

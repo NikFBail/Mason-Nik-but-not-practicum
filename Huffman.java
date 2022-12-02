@@ -190,7 +190,7 @@ public class Huffman {
     }
 
      public static void main(String[] args) {
-            System.out.println("Give the name of the input file and then the name of the outputfile, separated by a space.");
+            System.out.println("Give the name of the input file and then the name of the output file, separated by a space.");
             // Scanner for system in
             Scanner scan = new Scanner(System.in);
             String inputFile = scan.next();
