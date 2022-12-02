@@ -6,8 +6,8 @@ public class Node {
     public String letter;
     public String binary = "";
 
-    public Node left;
-    public Node right;
+    public Node leftChild;
+    public Node rightChild;
     public Node parent;
 
     public Node() {
@@ -24,12 +24,12 @@ public class Node {
         this.frequency = freq;
     }    
 
-    public Node(Node lift, Node write){ //purposefully gave bad names so we can distinguish between variables
-        this.frequency = lift.frequency + write.frequency;
-        this.left = lift;
-        this.right = write;
-        left.parent = this;
-        right.parent = this;
+    public Node(Node left, Node right){ //purposefully gave bad names so we can distinguish between variables
+        this.frequency = left.frequency + right.frequency;
+        this.leftChild = left;
+        this.rightChild = right;
+        leftChild.parent = this;
+        leftChild.parent = this;
     }
 
     public String toString(){
@@ -38,7 +38,7 @@ public class Node {
 
     public static String treeToString(Node that) {
         if(that == null) return "";
-        return treeToString(that.left) + treeToString(that.right) + that.frequency + "||" + that.binary + " ";
+        return treeToString(that.leftChild) + treeToString(that.rightChild) + that.frequency + "||" + that.binary + "   ";
     }
 
     public int compareTo(Node that) {
