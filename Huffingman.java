@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
-public class Huffman {
-
+public class Huffingman {
     public Node root;
     public ArrayList<Node> nodeArray = new ArrayList<Node>();;
     
@@ -16,7 +15,7 @@ public class Huffman {
  * we will read from, the boolean determines if the input file is in binary or contains the frequencies
  * of the letters.
  */
-    public Huffman(String input, Boolean freqOrBin){
+    public Huffingman(String input, Boolean freqOrBin){
         try{
             File file = new File(input);  
             Scanner scan = new Scanner(file);
@@ -181,60 +180,11 @@ public class Huffman {
      * It goes through every node in the ArrayList of nodes and sums their binary length multiplied
      * by their frequency. 
      */
-    private String averageLength(){
+    String averageLength(){
         double total = 0;
         for (Node node : nodeArray) {
             total += (node.frequency/100) * node.binary.length();
         }
         return total + "";
     }
-
-     public static void main(String[] args) {
-            System.out.println("Give the name of the input file and then the name of the output file, separated by a space.");
-            // Scanner for system in
-            Scanner scan = new Scanner(System.in);
-            String inputFile = scan.next();
-            String outputFile = scan.next();
-
-            System.out.println("Specify if the file has the binary or frequency of given characters,");
-            System.out.println("write b for binary or f for frequency.");
-            scan.nextLine();
-            char answer = scan.next().charAt(0);
-            Boolean freqOrBin = true;
-            if(answer == 'b') freqOrBin = false;
-            if(answer == 'f') freqOrBin = true;
-
-
-            // Construct the Huffman object with the file input
-            Huffman Huffer = new Huffman(inputFile, freqOrBin);
-            // Second input from the scanner is given to the fileWriter
-            
-            // Takes a given writer, and uses it to output 
-            Huffer.outputList(outputFile);
-            if(answer == 'f') System.out.println("Average length of binary representations: " + Huffer.averageLength());
-
-
-            System.out.println("Encrypt or Decrypt? (e/d)");
-            scan.nextLine();
-            answer = scan.next().charAt(0);
-            if(answer == 'd'){
-                System.out.println("Now enter the encrypted text:");
-                
-                String encryptedText = "";
-                while(scan.hasNext()){
-                    encryptedText += scan.next();
-                }
-                System.out.println("Decrypted text:");
-                System.out.println(Huffer.decrypt(encryptedText));
-            } else if (answer == 'e') {
-                System.out.println("Now enter some plaintext:");
-                String plainText = "";
-                while(scan.hasNext()){
-                    plainText += scan.next();
-                }
-                String cleanText = plainText.replaceAll("\\W|[0-9]|_", "");
-                System.out.println(Huffer.encrypt(cleanText.toLowerCase()));
-            } else System.out.println("That's not what I asked for");
-            scan.close();
-     }
 }
