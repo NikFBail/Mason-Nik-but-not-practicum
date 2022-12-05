@@ -37,13 +37,11 @@ public class Huffingman {
         }
     }
 
-    /**
-     * createTree has no input, but uses the ArrayList of nodes made by the Huffingman constructor.
-     * It takes the ArrayList and creates a PriorityQueue of the nodes. Then it loops through taking
-     * the two letters with the lowest frequencies (first two in queue) and combines them by making a parent
-     * node with a frequency equal to the sum of the two given frequencies, then it makes the two given nodes children
-     * of the new node. It does this over and over again until it creates a node with a frequency value of 100%, then
-     * it makes that node the root node. Then it sends the root node to the HuffingAlgorithm method
+    /*
+     * This method takes the ArrayList made by the Huffman constructor, converts it to a PriorityQueue,
+     * and then loops through, each time combining the two nodes with the lowest frequencies to make a
+     * parent node with a frequency equal to the sum of the two. The two nodes used become its children.
+     * The loop continues until a parent node is created with a frequency value of 100% (the root node).
      */
     public void createTree(){
         Node first, second, combinedNode;
@@ -86,13 +84,10 @@ public class Huffingman {
 
     }
 
-    /**
-     * This function takes the root node of the tree created by createTree(). It recursively
-     * explores the tree adding a string value to each node's binary representation. It adds the string
-     * 0 to every left child's binary representation and 1 to every right child's binary representation.
-     * This hits every node in the tree and accurately gives each letter their binary representation according to
-     * the Huffing Algorithm
-     * @param node
+     /*
+     * This function creates the binary encoding for a Huffman Tree. Anything left of the current
+     * node is a '0' and anything to the right is a '1'. Explores the tree recursively, going down
+     * to the left child and the right child of the current node.
      */
     public static void HuffingAlgorithm(Node node){
         if(node != null) {
@@ -105,11 +100,9 @@ public class Huffingman {
         }
     }
 
-    /**
-     * This function takes the name of the output file and outputs each letter with its binary representation.
-     * It throws the ArrayList of nodes into a priority queue that organizes it by length of binary representation.
-     * Then it writes each node letter next to its binary represention in that order.
-     * @param outFile Takes the name of the output file
+     /*
+     * This function takes the name of the output file and prints into the file each letter with its
+     * binary representation. 
      */
     public void outputList(String outFile){
         try{
@@ -125,15 +118,16 @@ public class Huffingman {
         } catch (IOException e) { System.out.println("IOException in the outputList method");}
     }
 
-    /**
-     * This function takes the encrypted text and turns it into the original characters.
-     * It starts at the root node, and iterates through by following the binary given.
-     * If the current character is a 1 it goes to the right and if it is a 0 it goes to the left.
-     * It does this until it hits a leaf node (a node that has a character value). Once it finds one, it adds
-     * it to the result string and starts back at the root continuing the process until it runs out of characters in the given string.
-     * At the end it outputs the accumulated result string.
-     * @param cryptText Takes text encrypted by the same Huffing tree as this instance
-     * @return Returns the decrypted text with no spaces or puncuation.
+    /*
+     * This function takes an encrypted text and decrypts to English alphabet
+     * characters. Starting at the beginning of the encrypted text, the function
+     * starts at the root node of the Huffman tree. If the current binary character is
+     * a '0', it goes to the left child. If the current binary character is a '1', it
+     * goes to the right child. It then moves on to the next binary character in the 
+     * encrypted text, and repeats this process until it reaches a leaf node. Then the
+     * English alphabet value of that leaf node is added to the result, string and the whole
+     * process starts over again at the root node. Ends once all the encrypted binary characters
+     * have been iterated through once.
      */
     public String decrypt(String cryptText){
         char[] text = cryptText.toCharArray();
@@ -154,15 +148,10 @@ public class Huffingman {
         return result;
     }
 
-    /**
+    /*
      * This function takes some plaintext that is assumed to have the characters in the Huffing Tree and
-     * converts it to their binary represntation without any spaces. Every 70 characters it will also
+     * converts it to their binary representation without any spaces. Every 70 characters it will also
      * add a \n to make it more readable. The function ends when it runs out of characters to convert.
-     *
-     * @param plainText Takes some plaintext without any spaces or special characters.
-     * If a character in the plaintext doesn't exist in the Huffing Tree it won't print anything
-     * for that character
-     * @return Returns the encrypted text in 1's and 0's
      */
     public String encrypt(String plainText){
         String result = "";
@@ -180,14 +169,9 @@ public class Huffingman {
         return result;
     }
 
-    /**
-     * This function takes information from the encrypt() method, like the letter to be encrypted
-     * and the root node of the Huffing Tree. It visits every node in the tree and adds all the returned
-     * strings together. The only time the function returns an actual string is when it finds the node with
-     * the matching character. So at the end it should only have the correct binary.
-     * @param currentChar Takes the character that is to be encrypted
-     * @param node Takes the root node of the tree used to encrypt the text
-     * @return returns the binary representation of the given character
+     /*
+     * This function is a helper function for the encrypt() method. It will recursively go through the tree
+     * and get the binary encoding of the letter that it's looking for.
      */
     private String encryptHelper(char currentChar, Node node){
         if(node != null) {
@@ -196,11 +180,10 @@ public class Huffingman {
         } else return "";
     }
 
-    /**
-     * This function finds the average binary length of the current tree in this instance.
+     /*
+     * This function finds the average binary length of the current tree in this instance. 
      * It goes through every node in the ArrayList of nodes and sums their binary length multiplied
-     * by their frequency.
-     * @return returns the average binary length
+     * by their frequency. 
      */
     String avgLength(){
         double total = 0;
