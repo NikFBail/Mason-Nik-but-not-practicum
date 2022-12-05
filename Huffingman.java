@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class Huffingman {
     public Node root;
-    public ArrayList<Node> nodeArray = new ArrayList<Node>();;
+    public ArrayList<Node> nodeArr = new ArrayList<Node>();;
     
 /*
  * This function takes a file name and a boolean as it's arguments. The file name is the input file that
@@ -21,12 +21,12 @@ public class Huffingman {
             Scanner scan = new Scanner(file);
             if(freqOrBin) { // If the file contains frequency values
                 while (scan.hasNextLine()) {
-                    this.nodeArray.add(new Node(scan.next().substring(0, 1), scan.nextDouble()));
+                    this.nodeArr.add(new Node(scan.next().substring(0, 1), scan.nextDouble()));
                 }
                 createTree();
             } else { // If the file is in binary
                 while (scan.hasNextLine()) {
-                    this.nodeArray.add(new Node(scan.next().substring(0, 1), scan.next()));
+                    this.nodeArr.add(new Node(scan.next().substring(0, 1), scan.next()));
                     scan.nextLine();
                 }
                 createBinaryTree();
@@ -46,7 +46,7 @@ public class Huffingman {
     public void createTree(){
         Node first, second, combinedNode;
         PriorityQueue<Node> nodeQ = new PriorityQueue<>(new ComparatoFreq());
-        nodeQ.addAll(nodeArray);
+        nodeQ.addAll(nodeArr);
         while(this.root == null){
             first = nodeQ.poll();
             second = nodeQ.poll();
@@ -59,7 +59,7 @@ public class Huffingman {
 
     public void createBinaryTree(){
         root = new Node();
-        for (Node node : nodeArray) {
+        for (Node node : nodeArr) {
             Node curr = root;
             char[] binArray = node.binary.toCharArray();
             for (int i = 0; i < binArray.length; i++) {
@@ -102,7 +102,7 @@ public class Huffingman {
         try{
             FileWriter writer= new FileWriter(outFile);
             PriorityQueue<Node> nodeQ = new PriorityQueue<>(new ComparatoBinary());
-            nodeQ.addAll(nodeArray);
+            nodeQ.addAll(nodeArr);
             for (int i = nodeQ.size(); 0 < i; i--) {
                 node = nodeQ.poll();
                 writer.write(node.letter + " " + node.binary + "\n");
@@ -180,9 +180,9 @@ public class Huffingman {
      * It goes through every node in the ArrayList of nodes and sums their binary length multiplied
      * by their frequency. 
      */
-    String averageLength(){
+    String avgLength(){
         double total = 0;
-        for (Node node : nodeArray) {
+        for (Node node : nodeArr) {
             total += (node.frequency/100) * node.binary.length();
         }
         return total + "";

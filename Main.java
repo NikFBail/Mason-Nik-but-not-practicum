@@ -25,19 +25,20 @@ public class Main {
             
             // Takes a given writer, and uses it to output 
             Huffer.outputList(outputFile);
-            if(answer == "f") System.out.println("Average length of binary representations: " + Huffer.averageLength());
+            if(answer == "f") System.out.println("Average length of binary representations: " + Huffer.avgLength());
 
 
             System.out.println("Enter an option:\n1. Encrypt\n2. Decrypt");
             switch (new Scanner(System.in).nextInt()) {
                 case 1:
                     System.out.println("Now enter some plaintext:");
-                    String plainText = "";
+                    String plaintext = "";
                     while(scan.hasNext()){
-                        plainText += scan.next();
+                        plaintext += scan.next();
                     }
-                    String cleanText = plainText.replaceAll("^\\s|\\W|\\d|_|:", "");
-                    System.out.println(Huffer.encrypt(cleanText.toLowerCase()));
+                    String lametext = plaintext.replaceAll("^\\s|\\W|\\d|_|:", "");
+                    System.out.println("This it the plaintext: " + lametext);
+                    System.out.println(Huffer.encrypt(lametext.toLowerCase()));
                 case 2:
                     System.out.println("Now enter the encrypted text:"); 
                     String encryptedText = "";
