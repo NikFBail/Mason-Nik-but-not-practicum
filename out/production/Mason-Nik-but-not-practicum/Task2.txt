@@ -1,0 +1,13 @@
+Finding time complexity of our algorithm
+
+In this case n is equivalent to the number of letters we
+    need to find the frequency of, which is also equivalent
+    to the number of lines in the input file
+
+We read through the input file once to get the total number of
+    letters we need to find the frequency of, and then again
+    to put them into a priority queue. (so n for each of those loops)
+
+The while loop, 'while (priorQ.size() > 1)', goes through n - 1 times.
+
+The method printCode is recursive, so idk we need to figure this out
