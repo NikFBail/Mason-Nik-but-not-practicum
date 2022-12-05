@@ -37,24 +37,26 @@ public class Huffingman {
         }
     }
 
-    /*
-     * This method takes the ArrayList made by the Huffman constructor, converts it to a PriorityQueue,
-     * and then loops through, each time combining the two nodes with the lowest frequencies to make a
-     * parent node with a frequency equal to the sum of the two. The two nodes used become its children.
-     * The loop continues until a parent node is created with a frequency value of 100% (the root node).
+    /**
+     * createTree has no input, but uses the ArrayList of nodes made by the Huffingman constructor.
+     * It takes the ArrayList and creates a PriorityQueue of the nodes. Then it loops through taking
+     * the two letters with the lowest frequencies (first two in queue) and combines them by making a parent
+     * node with a frequency equal to the sum of the two given frequencies, then it makes the two given nodes children
+     * of the new node. It does this over and over again until it creates a node with a frequency value of 100%, then
+     * it makes that node the root node. Then it sends the root node to the HuffingAlgorithm method
      */
     public void createTree(){
         Node first, second, combinedNode;
         PriorityQueue<Node> nodeQ = new PriorityQueue<>(new ComparatoFreq());
         nodeQ.addAll(nodeArr);
         while(this.root == null){
-            first = nodeQ.poll();
-            second = nodeQ.poll();
+            first = nodeQueue.poll();
+            second = nodeQueue.poll();
             combinedNode = new Node(first, second);
-            nodeQ.add(combinedNode);
-            if(combinedNode.frequency == 100) this.root = combinedNode;
+            nodeQueue.add(combinedNode);
+            if(combinedNode.letterFrequency == 100) this.root = combinedNode;
         }
-        HuffAlg(this.root);
+        HuffingAlgorithm(this.root);
     }
 
     public void createBinaryTree(){
@@ -64,41 +66,52 @@ public class Huffingman {
             char[] binArray = node.binary.toCharArray();
             for (int i = 0; i < binArray.length; i++) {
                 if(binArray[i] == '0') {
-                    if(i == binArray.length-1) curr.leftChild = node;
-                    else {
-                        if(curr.leftChild == null) curr.leftChild = new Node();
-                        curr = curr.leftChild;
+                    if(i == binArray.length-1) {
+                        current.leftChild = node;
+                    } else {
+                        if(current.leftChild == null)current.leftChild = new Node();
+                        current = current.leftChild;
                     }
                 } else {
-                    if(i == binArray.length-1) curr.rightChild = node;
-                    else {
-                        if(curr.rightChild == null) curr.rightChild = new Node();
-                        curr = curr.rightChild;
+                    if(i == binArray.length-1) {
+                        current.rightChild = node;
+                    } else {
+                        if(current.rightChild == null)current.rightChild = new Node();
+                        current = current.rightChild;
                     }
                 }
             }
+
+        }
+
+    }
+
+    /**
+     * This function takes the root node of the tree created by createTree(). It recursively
+     * explores the tree adding a string value to each node's binary representation. It adds the string
+     * 0 to every left child's binary representation and 1 to every right child's binary representation.
+     * This hits every node in the tree and accurately gives each letter their binary representation according to
+     * the Huffing Algorithm
+     * @param node
+     */
+    public static void HuffingAlgorithm(Node node){
+        if(node != null) {
+            if (node.leftChild != null)
+                node.leftChild.binary = node.binary + "0";
+            if (node.rightChild != null)
+                node.rightChild.binary = node.binary + "1";
+            HuffingAlgorithm(node.leftChild);
+            HuffingAlgorithm(node.rightChild);
         }
     }
 
-    /*
-     * This function creates the binary encoding for a Huffman Tree. Anything left of the current
-     * node is a '0' and anything to the right is a '1'. Explores the tree recursively, going down
-     * to the left child and the right child of the current node.
-     */
-    public static void HuffAlg(Node node){
-        if(node == null) return;
-        if(node.leftChild !=null) node.leftChild.binary = node.binary + "0";
-        if(node.rightChild !=null) node.rightChild.binary = node.binary + "1";
-        HuffAlg(node.leftChild);
-        HuffAlg(node.rightChild);
-    }
-
-    /*
-     * This function takes the name of the output file and prints into the file each letter with its
-     * binary representation. 
+    /**
+     * This function takes the name of the output file and outputs each letter with its binary representation.
+     * It throws the ArrayList of nodes into a priority queue that organizes it by length of binary representation.
+     * Then it writes each node letter next to its binary represention in that order.
+     * @param outFile Takes the name of the output file
      */
     public void outputList(String outFile){
-        Node node;
         try{
             FileWriter writer= new FileWriter(outFile);
             PriorityQueue<Node> nodeQ = new PriorityQueue<>(new ComparatoBinary());
@@ -108,77 +121,85 @@ public class Huffingman {
                 writer.write(node.letter + " " + node.binary + "\n");
             }
             writer.close();
-        } catch (IOException e) {
-            System.out.println("IOException in the outputList method");
-        }
+        } catch (IOException e) { System.out.println("IOException in the outputList method");}
     }
 
-    /*
-     * This function takes an encrypted text and decrypts to English alphabet
-     * characters. Starting at the beginning of the encrypted text, the function
-     * starts at the root node of the Huffman tree. If the current binary character is
-     * a '0', it goes to the left child. If the current binary character is a '1', it
-     * goes to the right child. It then moves on to the next binary character in the 
-     * encrypted text, and repeats this process until it reaches a leaf node. Then the
-     * English alphabet value of that leaf node is added to the result, string and the whole
-     * process starts over again at the root node. Ends once all the encrypted binary characters
-     * have been iterated through once.
+    /**
+     * This function takes the encrypted text and turns it into the original characters.
+     * It starts at the root node, and iterates through by following the binary given.
+     * If the current character is a 1 it goes to the right and if it is a 0 it goes to the left.
+     * It does this until it hits a leaf node (a node that has a character value). Once it finds one, it adds
+     * it to the result string and starts back at the root continuing the process until it runs out of characters in the given string.
+     * At the end it outputs the accumulated result string.
+     * @param cryptText Takes text encrypted by the same Huffing tree as this instance
+     * @return Returns the decrypted text with no spaces or puncuation.
      */
     public String decrypt(String cryptText){
         char[] text = cryptText.toCharArray();
         Node currNode = this.root;
         String result = "";
         for (int i = 0; i < text.length; i++) {
-            if(text[i] == '1') currNode = currNode.rightChild;
-            else currNode = currNode.leftChild;
-            if(currNode.letter != "0") {
-                result += currNode.letter; 
-                if(result.length()%70 == 69) result += "\n";
+            if(text[i] == '1') {
+                currNode = currNode.rightChild;
+            } else {
+                currNode = currNode.leftChild;
+            }
+            if(currNode.letter != (char)0) {
+                result += currNode.letter;
+                //if(result.length()%70 == 69) result += "\n";
                 currNode = root;
             }
         }
         return result;
     }
 
-    /*
+    /**
      * This function takes some plaintext that is assumed to have the characters in the Huffing Tree and
-     * converts it to their binary representation without any spaces. Every 70 characters it will also
+     * converts it to their binary represntation without any spaces. Every 70 characters it will also
      * add a \n to make it more readable. The function ends when it runs out of characters to convert.
+     *
+     * @param plainText Takes some plaintext without any spaces or special characters.
+     * If a character in the plaintext doesn't exist in the Huffing Tree it won't print anything
+     * for that character
+     * @return Returns the encrypted text in 1's and 0's
      */
     public String encrypt(String plainText){
         String result = "";
         int counter = 0;
-        String[] text = new String[plainText.length()];
-        for(int i = 0; i < plainText.length(); i++) {
-            text[i] = plainText.substring(i, i + 1);
-        }
+        char[] text = plainText.toCharArray();
         for (int i = 0; i < text.length; i++) {
             String encryptedChar = encryptHelper(text[i], root);
             result += encryptedChar;
             counter += encryptedChar.length();
-            if(counter > 70){
-                counter = 0;
-                result += "\n";
-            }
+//            if(counter > 70){
+//                counter = 0;
+//                result += "\n";
+//            }
         }
         return result;
     }
 
-    /*
-     * This function is a helper function for the encrypt() method. It will recursively go through the tree
-     * and get the binary encoding of the letter that it's looking for.
+    /**
+     * This function takes information from the encrypt() method, like the letter to be encrypted
+     * and the root node of the Huffing Tree. It visits every node in the tree and adds all the returned
+     * strings together. The only time the function returns an actual string is when it finds the node with
+     * the matching character. So at the end it should only have the correct binary.
+     * @param currentChar Takes the character that is to be encrypted
+     * @param node Takes the root node of the tree used to encrypt the text
+     * @return returns the binary representation of the given character
      */
-    private String encryptHelper(String currentLetter, Node node){
+    private String encryptHelper(char currentChar, Node node){
         if(node != null) {
-            if(node.letter == currentLetter) return node.binary;
-            return encryptHelper(currentLetter, node.leftChild) + encryptHelper(currentLetter, node.rightChild);
+            if(node.letter == currentChar) return node.binary;
+            return encryptHelper(currentChar, node.leftChild) + encryptHelper(currentChar, node.rightChild);
         } else return "";
     }
 
-    /*
-     * This function finds the average binary length of the current tree in this instance. 
+    /**
+     * This function finds the average binary length of the current tree in this instance.
      * It goes through every node in the ArrayList of nodes and sums their binary length multiplied
-     * by their frequency. 
+     * by their frequency.
+     * @return returns the average binary length
      */
     String avgLength(){
         double total = 0;
