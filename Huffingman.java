@@ -21,12 +21,12 @@ public class Huffingman {
             Scanner scan = new Scanner(file);
             if(freqOrBin) { // If the file contains frequency values
                 while (scan.hasNextLine()) {
-                    this.nodeArr.add(new Node(scan.next().substring(0, 1), scan.nextDouble()));
+                    this.nodeArr.add(new Node(scan.next().charAt(0), scan.nextDouble()));
                 }
                 createTree();
             } else { // If the file is in binary
                 while (scan.hasNextLine()) {
-                    this.nodeArr.add(new Node(scan.next().substring(0, 1), scan.next()));
+                    this.nodeArr.add(new Node(scan.next().charAt(0), scan.next()));
                     scan.nextLine();
                 }
                 createBinaryTree();
@@ -50,11 +50,11 @@ public class Huffingman {
         PriorityQueue<Node> nodeQ = new PriorityQueue<>(new ComparatoFreq());
         nodeQ.addAll(nodeArr);
         while(this.root == null){
-            first = nodeQueue.poll();
-            second = nodeQueue.poll();
+            first = nodeQ.poll();
+            second = nodeQ.poll();
             combinedNode = new Node(first, second);
-            nodeQueue.add(combinedNode);
-            if(combinedNode.letterFrequency == 100) this.root = combinedNode;
+            nodeQ.add(combinedNode);
+            if(combinedNode.frequency == 100) this.root = combinedNode;
         }
         HuffingAlgorithm(this.root);
     }
@@ -67,17 +67,17 @@ public class Huffingman {
             for (int i = 0; i < binArray.length; i++) {
                 if(binArray[i] == '0') {
                     if(i == binArray.length-1) {
-                        current.leftChild = node;
+                        curr.leftChild = node;
                     } else {
-                        if(current.leftChild == null)current.leftChild = new Node();
-                        current = current.leftChild;
+                        if(curr.leftChild == null)curr.leftChild = new Node();
+                        curr = curr.leftChild;
                     }
                 } else {
                     if(i == binArray.length-1) {
-                        current.rightChild = node;
+                        curr.rightChild = node;
                     } else {
-                        if(current.rightChild == null)current.rightChild = new Node();
-                        current = current.rightChild;
+                        if(curr.rightChild == null)curr.rightChild = new Node();
+                        curr = curr.rightChild;
                     }
                 }
             }
@@ -114,7 +114,8 @@ public class Huffingman {
     public void outputList(String outFile){
         try{
             FileWriter writer= new FileWriter(outFile);
-            PriorityQueue<Node> nodeQ = new PriorityQueue<>(new ComparatoBinary());
+            PriorityQueue<Node> nodeQ = new PriorityQueue<>(new ComparatoBin());
+            Node node;
             nodeQ.addAll(nodeArr);
             for (int i = nodeQ.size(); 0 < i; i--) {
                 node = nodeQ.poll();

@@ -24,7 +24,7 @@ public class Main {
              case 1:
                  Huffer = new Huffingman(inputFile, true);
                  Huffer.outputList(outputFile);
-                 System.out.println("Average length of binary representation: " + Huffer.averageLength());
+                 System.out.println("Average length of binary representation: " + Huffer.avgLength());
                  break;
              case 2:
                  Huffer = new Huffingman(inputFile, false);
