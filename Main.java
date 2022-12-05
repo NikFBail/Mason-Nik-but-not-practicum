@@ -45,35 +45,16 @@ public class Main {
          mainPrompt();
      }
 
-            // Construct the Huffman object with the file input
-            Huffingman Huffer = new Huffingman(inputFile, freqOrBin);
-            // Second input from the scanner is given to the fileWriter
-            
-            // Takes a given writer, and uses it to output 
-            Huffer.outputList(outputFile);
-            if(answer == "f") System.out.println("Average length of binary representations: " + Huffer.avgLength());
+    private static void decryptPrompt() {
+        System.out.println("Please enter the ciphertext:");
+        String ciphertext = scan.nextLine();
+        System.out.println("The decrypted text is: " + Huffer.decrypt(ciphertext.replaceAll(" ", "")));
+    }
 
-
-            System.out.println("Enter an option:\n1. Encrypt\n2. Decrypt");
-            switch (new Scanner(System.in).nextInt()) {
-                case 1:
-                    System.out.println("Now enter some plaintext:");
-                    String plaintext = "";
-                    while(scan.hasNext()){
-                        plaintext += scan.next();
-                    }
-                    String lametext = plaintext.replaceAll("^\\s|\\W|\\d|_|:", "");
-                    System.out.println("This it the plaintext: " + lametext);
-                    System.out.println(Huffer.encrypt(lametext.toLowerCase()));
-                case 2:
-                    System.out.println("Now enter the encrypted text:"); 
-                    String encryptedText = "";
-                    while(scan.hasNext()){
-                        encryptedText += scan.next();
-                    }
-                    System.out.println("Decrypted text:");
-                    System.out.println(Huffer.decrypt(encryptedText)); 
-            }
-            scan.close();
+    public static void encryptPrompt(){
+         System.out.println("Please enter the plaintext:");
+         String plaintext = scan.nextLine();
+         String cleantext = plaintext.replaceAll("^\\s|\\W|\\d|_|:", "").toLowerCase();
+         System.out.println("The result of encryption is: " + Huffer.encrypt(cleantext));
      }
 } // end Main
