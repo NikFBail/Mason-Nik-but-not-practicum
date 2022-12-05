@@ -47,7 +47,7 @@ public class Main {
 
     private static void decryptPrompt() {
         System.out.println("Please enter the ciphertext:");
-        String ciphertext = scan.next();
+        String ciphertext = scan.nextLine();
         System.out.println("The decrypted text is: " + Huffer.decrypt(ciphertext.replaceAll(" ", "")));
     }
 

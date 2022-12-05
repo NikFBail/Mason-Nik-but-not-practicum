@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10e6f87d-8930-40eb-9a36-78e89f0547b9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Mason-Nik-but-not-practicum.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Huffingman.java" beforeDir="false" afterPath="$PROJECT_DIR$/Huffingman.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Node.java" beforeDir="false" afterPath="$PROJECT_DIR$/Node.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Task3.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/english.txt" beforeDir="false" afterPath="$PROJECT_DIR$/english.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testOut.txt" beforeDir="false" afterPath="$PROJECT_DIR$/testOut.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Mason-Nik-but-not-practicum/Huffingman.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Mason-Nik-but-not-practicum/Huffingman.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +50,7 @@
       <option name="presentableId" value="Default" />
       <updated>1669841543596</updated>
       <workItem from="1669841544769" duration="164000" />
-      <workItem from="1670196682040" duration="4287000" />
+      <workItem from="1670196682040" duration="4504000" />
     </task>
     <servers />
   </component>
